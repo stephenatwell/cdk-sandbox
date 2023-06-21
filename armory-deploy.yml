@@ -1,0 +1,19 @@
+version: v1
+kind: lambda
+application: potatolessFacts
+deploymentConfig:
+  timeout:
+    unit: minutes
+    duration: 30
+targets:
+  armory-product-demos:
+    account: arn:aws:iam::957626022434:role/ArmoryRole
+    strategy: rollingDeployment
+manifests:
+  - path: ./manifests/potato-facts.yml
+strategies:
+  rollingDeployment:
+    canary:
+      steps:
+        - setWeight:
+            weight: 100
